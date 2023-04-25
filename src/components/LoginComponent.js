@@ -1,15 +1,29 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 function LoginComponent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const handleSubmit = (event) => {
+  const history = useHistory();
+  async function handleSubmit(event) {
     event.preventDefault();
-    //make a api call
-    //store the data in local storage
-    //navigate to user page
-  };
+    const data = { email, password };
+
+    const response = await fetch("/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    const responseData = await response.json();
+    console.log(responseData);
+    localStorage.setItem("role", responseData.role);
+    localStorage.setItem("userId", responseData.userId);
+    setEmail("");
+    setPassword("");
+    history.push("/user");
+  }
   return (
     <div>
       <label for="uname">
@@ -36,7 +50,7 @@ function LoginComponent() {
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <button>Login</button>
+      <button onClick={handleSubmit}>Login</button>
       <Link to="/signup">Click here to sign up</Link>
     </div>
   );
