@@ -7,7 +7,7 @@ function UserComponent() {
   const name = localStorage.getItem("userName");
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`/api/cards?userId=${userId}&role=${role}`);
+      const response = await fetch(`localhost:8080/api/touristspot`);
       const data = await response.json();
       setCards(data);
     };

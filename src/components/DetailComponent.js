@@ -1,15 +1,22 @@
 import React from "react";
 
-function DetailComponent(props) {
+function DetailComponent() {
+  const url = window.location.pathname; // get the current URL path
+  const id = url.substring(url.lastIndexOf('/') + 1);
   const [details, setDetails] = useState(null);
   const [feedbacks, setFeedbacks] = useState(null);
 
   useEffect(() => {
     // make API call to retrieve details data
+
     const fetchDetails = async () => {
+      const res = await fetch(`localhost:8080/api/touristspot/${id}`);
+      const data1 = await response.json();
+      setDetails(data1);
       const response = await fetch(`/api/details?name=${props.name}`);
       const data = await response.json();
-      setDetails(data);
+      setFeedbacks(data)
+      
     };
     fetchDetails();
 
@@ -30,15 +37,17 @@ function DetailComponent(props) {
     <div>
       <h1>{details.name}</h1>
       <h2>{details.location}</h2>
-      <h3>{details.creator}</h3>
+      
       <p>{details.description}</p>
       <p>{details.price}</p>
+      <h3>{details.user.firstName}</h3>
       <button>Book Now</button>
       <h3>Feedbacks:</h3>
       <ul>
         {feedbacks.map((feedback) => (
           <li key={feedback.id}>
-            <p>{feedback.comment}</p>
+            <h3>{feedback.email}</h3>
+            <p>{feedback.FeedBack}</p>
             <p>{feedback.rating}/5 stars</p>
           </li>
         ))}

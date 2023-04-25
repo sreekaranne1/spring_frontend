@@ -1,16 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function LoginComponent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const history = useHistory();
+  const history = useNavigate();
   async function handleSubmit(event) {
     event.preventDefault();
     const data = { email, password };
 
-    const response = await fetch("/api/login", {
+    const response = await fetch("http://localhost:8080/api/signin", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
