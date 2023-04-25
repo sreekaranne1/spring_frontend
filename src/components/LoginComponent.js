@@ -17,12 +17,16 @@ function LoginComponent() {
     });
 
     const responseData = await response.json();
-    console.log(responseData);
-    localStorage.setItem("role", responseData.role);
-    localStorage.setItem("userId", responseData.userId);
+    if (responseData == "User signed in successfully.") {
+      localStorage.setItem("role", responseData.role);
+      localStorage.setItem("userId", responseData.userId);
+      localStorage.setItem("userName", responseData.firstName);
+      history.push("/user");
+    } else {
+      alert("login failed, Please try again");
+    }
     setEmail("");
     setPassword("");
-    history.push("/user");
   }
   return (
     <div>

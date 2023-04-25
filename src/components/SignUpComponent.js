@@ -6,9 +6,26 @@ function SignUpComponent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (event) => {
+  async function handleSubmit(event){
     event.preventDefault();
-    // Submit the form data to the server
+    const data = { firstName,lastName,email, password };
+
+    const response = await fetch("/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    const responseData = await response.json();
+    if (id) {
+        history.push("/");
+      
+    } else {
+      alert("Sign Up failed, Please try again");
+    }
+    setEmail("");
+    setPassword("");
+   
+    
   };
   return (
     <form onSubmit={handleSubmit}>

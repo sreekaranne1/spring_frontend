@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 
 function UserComponent() {
+  const [cards, setCards] = useState(null);
+  const userId = localStorage.getItem("userId");
+  const role = localStorage.getItem("role");
+  const name = localStorage.getItem("userName");
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(`/api/cards?userId=${userId}&role=${role}`);
+      const data = await response.json();
+      setCards(data);
+    };
+    fetchData();
+  }, [userId, role]);
+
+  if (!cards) {
+    return <div>Loading...</div>;
+  }
   return (
     <div>
-      <h1>Welcome, {user.name}!</h1>
+      <h1>Welcome, {name}!</h1>
       <p>Here are the Spots:</p>
       <ul>
         {cards.map((card) => (
