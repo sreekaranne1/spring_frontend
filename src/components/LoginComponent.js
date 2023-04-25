@@ -1,11 +1,11 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 
 function LoginComponent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const history = useNavigate();
+  const navigate = useNavigate();
   async function handleSubmit(event) {
     event.preventDefault();
     const data = { email, password };
@@ -21,7 +21,7 @@ function LoginComponent() {
       localStorage.setItem("role", responseData.role);
       localStorage.setItem("userId", responseData.userId);
       localStorage.setItem("userName", responseData.firstName);
-      history.push("/user");
+      navigate("/user");
     } else {
       alert("login failed, Please try again");
     }

@@ -1,4 +1,6 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
+
+
 
 function DetailComponent() {
   const url = window.location.pathname; // get the current URL path
@@ -13,7 +15,7 @@ function DetailComponent() {
       const res = await fetch(`localhost:8080/api/touristspot/${id}`);
       const data1 = await response.json();
       setDetails(data1);
-      const response = await fetch(`/api/details?name=${props.name}`);
+      const response = await fetch(`/api/details?name=${id}`);
       const data = await response.json();
       setFeedbacks(data)
       
@@ -22,12 +24,12 @@ function DetailComponent() {
 
     // make API call to retrieve feedback data
     const fetchFeedbacks = async () => {
-      const response = await fetch(`/api/feedbacks?name=${props.name}`);
+      const response = await fetch(`/api/feedbacks?name=${id}`);
       const data = await response.json();
       setFeedbacks(data);
     };
     fetchFeedbacks();
-  }, [props.name]);
+  }, [id]);
 
   if (!details || !feedbacks) {
     return <div>Loading...</div>;
